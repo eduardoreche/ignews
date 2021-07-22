@@ -13,11 +13,16 @@ type User = {
   };
 };
 
-export default async function (request: NextApiRequest, response: NextApiResponse) {
+const subscribe = async (
+  request: NextApiRequest,
+  response: NextApiResponse
+) => {
   if (request.method === 'POST') {
     const session = await getSession({ req: request });
 
-    const user = await fauna.query<User>(q.Get(q.Match(q.Index('user_by_email'), q.Casefold(session.user.email))));
+    const user = await fauna.query<User>(
+      q.Get(q.Match(q.Index('user_by_email'), q.Casefold(session.user.email)))
+    );
 
     let customerId = user.data.stripe_customer_id;
 
@@ -55,4 +60,6 @@ export default async function (request: NextApiRequest, response: NextApiRespons
     response.setHeader('Allow', 'POST');
     response.status(405).end('Method not allowed');
   }
-}
+};
+
+export default subscribe;
