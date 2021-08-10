@@ -1,9 +1,10 @@
 import React from 'react';
-import { SignInButton } from '../SignInButton';
-import styles from './styles.module.scss';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+
+import { SignInButton } from '../SignInButton';
 import { ActiveLink } from '../ActiveLink';
+
+import styles from './styles.module.scss';
 
 export function Header() {
   return (
